@@ -18,7 +18,13 @@ class ViewController: UIViewController {
         
         yelp.getBusinesses() {
             response in
-            print(response)
+            if let businesses = response {
+                print(businesses)
+            }else{
+                //error
+                print("error")
+            }
+            
         }
         
         // Do any additional setup after loading the view, typically from a nib.

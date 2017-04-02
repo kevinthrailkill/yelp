@@ -19,8 +19,6 @@ fileprivate let yelpTokenSecret = "vFg2CfAO3DTr6mczF2uC36aVb40"
 
 class YelpNetworkService {
     
-    var accessToken: String!
-    var accessSecret: String!
     let sessionManager = SessionManager.default
     
     init() {
