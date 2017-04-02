@@ -1,0 +1,6 @@
+framework module Pods_Yelpr {
+  umbrella header "Pods-Yelpr-umbrella.h"
+
+  export *
+  module * { export * }
+}
