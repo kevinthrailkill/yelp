@@ -12,6 +12,15 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        let yelp = YelpNetworkService.init()
+        
+        yelp.getBusinesses() {
+            response in
+            print(response)
+        }
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
 
