@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		19E263B11E919D8B001C0085 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E263B01E919D8B001C0085 /* AppDelegate.swift */; };
-		19E263B31E919D8B001C0085 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E263B21E919D8B001C0085 /* ViewController.swift */; };
+		19E263B31E919D8B001C0085 /* YelpListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E263B21E919D8B001C0085 /* YelpListViewController.swift */; };
 		19E263B61E919D8B001C0085 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19E263B41E919D8B001C0085 /* Main.storyboard */; };
 		19E263B81E919D8B001C0085 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19E263B71E919D8B001C0085 /* Assets.xcassets */; };
 		19E263BB1E919D8B001C0085 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19E263B91E919D8B001C0085 /* LaunchScreen.storyboard */; };
@@ -20,7 +20,7 @@
 /* Begin PBXFileReference section */
 		19E263AD1E919D8B001C0085 /* Yelpr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yelpr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		19E263B01E919D8B001C0085 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		19E263B21E919D8B001C0085 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		19E263B21E919D8B001C0085 /* YelpListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpListViewController.swift; sourceTree = "<group>"; };
 		19E263B51E919D8B001C0085 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		19E263B71E919D8B001C0085 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		19E263BA1E919D8B001C0085 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -76,7 +76,7 @@
 			children = (
 				19E263C21E91A4C0001C0085 /* Model */,
 				19E263B01E919D8B001C0085 /* AppDelegate.swift */,
-				19E263B21E919D8B001C0085 /* ViewController.swift */,
+				19E263B21E919D8B001C0085 /* YelpListViewController.swift */,
 				19E263B41E919D8B001C0085 /* Main.storyboard */,
 				19E263B71E919D8B001C0085 /* Assets.xcassets */,
 				19E263B91E919D8B001C0085 /* LaunchScreen.storyboard */,
@@ -227,7 +227,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				19E263C61E91A7E1001C0085 /* YelpNetworkService.swift in Sources */,
-				19E263B31E919D8B001C0085 /* ViewController.swift in Sources */,
+				19E263B31E919D8B001C0085 /* YelpListViewController.swift in Sources */,
 				19E263C41E91A4CF001C0085 /* Business.swift in Sources */,
 				19E263B11E919D8B001C0085 /* AppDelegate.swift in Sources */,
 			);
