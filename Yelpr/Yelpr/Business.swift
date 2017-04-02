@@ -12,8 +12,7 @@ import Unbox
 struct Business : Unboxable {
     
     let name: String
-    let address: String
-    let neighborhoods: [String]?
+    let bizLocation: BusinessLocation?
     let imageURLString: String?
     let categories: [[String]]?
     let distanceInMeters: Double?
@@ -22,8 +21,7 @@ struct Business : Unboxable {
     
     init(unboxer: Unboxer) throws {
         self.name = try unboxer.unbox(key: "name")
-        self.address = try unboxer.unbox(key: "address")
-        self.neighborhoods = unboxer.unbox(key: "neighborhoods")
+        self.bizLocation = unboxer.unbox(key: "location")
         self.imageURLString = unboxer.unbox(key: "image_url")
         self.categories = unboxer.unbox(key: "categories")
         self.distanceInMeters = unboxer.unbox(key: "distance")
@@ -32,4 +30,14 @@ struct Business : Unboxable {
         
     }
 
+}
+
+struct BusinessLocation: Unboxable {
+    let address: [String]?
+    let neighborhoods: [String]?
+    
+    init(unboxer: Unboxer) throws {
+        self.address =  unboxer.unbox(key: "address")
+        self.neighborhoods = unboxer.unbox(key: "neighborhoods")
+    }
 }

@@ -8,8 +8,10 @@ target 'Yelpr' do
   # Pods for Yelpr
   pod 'Alamofire'
   pod 'UnboxedAlamofire'
-  pod "Unbox"
+  pod 'Unbox'
   pod 'AFNetworking'
   pod 'KRProgressHUD'
-  
+  pod 'OAuthSwift'
+  pod 'OAuthSwiftAlamofire'
+
 end
