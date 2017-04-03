@@ -41,17 +41,16 @@ class YelpNetworkService {
         
         //location set to sf - need to change to use users location
         
-        
         let locationString = "\(location.coordinate.latitude),\(location.coordinate.longitude)"
         
-        var parameters: [String : String] = ["term": text, "ll": locationString, "sort": "\(filters.sortValue.rawValue)" ]
+        var parameters: [String : AnyObject] = ["term": text as AnyObject, "ll": locationString as AnyObject, "sort": filters.sortValue.rawValue as AnyObject , "limit": 20 as AnyObject]
         
         if filters.distanceAway.rawValue != 0 {
-            parameters["radius_filter"] = "\(filters.distanceInMeters)"
+            parameters["radius_filter"] = filters.distanceInMeters as AnyObject
         }
         
         if filters.hasDeal {
-            parameters["deals_filter"] = "true"
+            parameters["deals_filter"] = true as AnyObject
         }
         
         
