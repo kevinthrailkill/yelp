@@ -58,6 +58,7 @@ class FilterPageViewController: UITableViewController {
         for row in 0..<numberOfRows {
             if let cell = tableView.cellForRow(at: IndexPath(row: row, section: section)) {
                 cell.accessoryType = row == indexPath.row ? .checkmark : .none
+                //
             }
         }
         
