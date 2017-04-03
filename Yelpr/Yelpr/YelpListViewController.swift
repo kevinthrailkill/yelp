@@ -25,6 +25,8 @@ class YelpListViewController: UIViewController {
     var filterPreferences = FilterPreferences()
     var locationManager: CLLocationManager!
     var offset = 0
+    var isMoreDataLoading = false
+    var loadingMoreView:InfiniteScrollActivityView?
     
     
     
@@ -64,6 +66,17 @@ class YelpListViewController: UIViewController {
         
         
         searchYelpFor(searchText: "")
+        
+        
+        // Set up Infinite Scroll loading indicator
+        let frame = CGRect(x: 0, y: businessListTableView.contentSize.height, width: businessListTableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
+        loadingMoreView = InfiniteScrollActivityView(frame: frame)
+        loadingMoreView!.isHidden = true
+        businessListTableView.addSubview(loadingMoreView!)
+        
+        var insets = businessListTableView.contentInset
+        insets.bottom += InfiniteScrollActivityView.defaultHeight
+        businessListTableView.contentInset = insets
 
 
     }
@@ -147,4 +160,94 @@ extension YelpListViewController : YelpFilterDelegate {
 extension YelpListViewController : CLLocationManagerDelegate {
     
 }
+
+extension YelpListViewController : UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (!isMoreDataLoading) {
+            // Calculate the position of one screen length before the bottom of the results
+            let scrollViewContentHeight = businessListTableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - businessListTableView.bounds.size.height
+            
+            // When the user has scrolled past the threshold, start requesting
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && businessListTableView.isDragging) {
+                isMoreDataLoading = true
+                offset += 1
+                // Update position of loadingMoreView, and start loading indicator
+                let frame = CGRect(x: 0, y: businessListTableView.contentSize.height, width: businessListTableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
+                loadingMoreView?.frame = frame
+                loadingMoreView!.startAnimating()
+                
+                // Code to load more results
+                loadMoreData()		
+            }
+        }
+    }
+    
+    func loadMoreData() {
+        
+        yelpService.getBusinesses(text: searchController.searchBar.text!, location: locationManager.location!, offset: offset, filters:filterPreferences) {
+            response in
+            if let businesses = response {
+                
+                // Update flag
+                self.isMoreDataLoading = false
+                
+                // Stop the loading indicator
+                self.loadingMoreView!.stopAnimating()
+                
+                self.businessList.append(contentsOf: businesses)
+                self.businessListTableView.reloadData()
+                
+                
+            }else{
+                //error
+                print("error")
+            }
+            
+        }
+
+        
+    }
+    
+    
+    
+}
+
+class InfiniteScrollActivityView: UIView {
+    var activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
+    static let defaultHeight:CGFloat = 60.0
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setupActivityIndicator()
+    }
+    
+    override init(frame aRect: CGRect) {
+        super.init(frame: aRect)
+        setupActivityIndicator()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        activityIndicatorView.center = CGPoint(x: self.bounds.size.width/2, y: self.bounds.size.height/2)
+    }
+    
+    func setupActivityIndicator() {
+        activityIndicatorView.activityIndicatorViewStyle = .gray
+        activityIndicatorView.hidesWhenStopped = true
+        self.addSubview(activityIndicatorView)
+    }
+    
+    func stopAnimating() {
+        self.activityIndicatorView.stopAnimating()
+        self.isHidden = true
+    }
+    
+    func startAnimating() {
+        self.isHidden = false
+        self.activityIndicatorView.startAnimating()
+    }
+}
+
 
