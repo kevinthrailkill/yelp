@@ -62,15 +62,14 @@ class YelpListViewController: UIViewController {
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         
-        let initialLocation = locationManager.location!
         
-        searchYelpFor(searchText: "", location: initialLocation)
+        searchYelpFor(searchText: "")
 
 
     }
     
-    func searchYelpFor(searchText: String, location: CLLocation) {
-        yelpService.getBusinesses(text: searchText, location: location, offset: offset, filters:filterPreferences) {
+    func searchYelpFor(searchText: String) {
+        yelpService.getBusinesses(text: searchText, location: locationManager.location!, offset: offset, filters:filterPreferences) {
             response in
             if let businesses = response {
                 self.businessList = businesses
@@ -87,11 +86,6 @@ class YelpListViewController: UIViewController {
             
         }
     }
-    
-    
-    
-    
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -126,30 +120,27 @@ extension YelpListViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BusinessCell", for: indexPath) as! BusinessCell
-        
         cell.business = businessList[indexPath.row]
-        
         return cell
-        
     }
-    
 }
 
 extension YelpListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
+        offset = 0
         if(searchController.searchBar.text!.characters.count > 0){
-            searchYelpFor(searchText: searchController.searchBar.text!, location: locationManager.location!)
+            searchYelpFor(searchText: searchController.searchBar.text!)
         }else{
-            searchYelpFor(searchText: "", location: locationManager.location!)
+            searchYelpFor(searchText: "")
         }
     }
 }
 
 extension YelpListViewController : YelpFilterDelegate {
     func searchWith(filters: FilterPreferences) {
+        offset = 0
         filterPreferences = filters
-        searchYelpFor(searchText: searchController.searchBar.text!, location: locationManager.location!)
-        
+        searchYelpFor(searchText: searchController.searchBar.text!)
     }
 }
 
