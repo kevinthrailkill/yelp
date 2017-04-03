@@ -36,11 +36,11 @@ class YelpNetworkService {
         
     }
 
-    func getBusinesses(completion: @escaping ([Business]?) -> ()) {
+    func getBusinesses(text: String, completion: @escaping ([Business]?) -> ()) {
         
         
         //location set to sf - need to change to use users location
-        let parameters: [String : String] = ["ll": "37.785771,-122.406165"]
+        let parameters: [String : String] = ["term": text, "ll": "37.785771,-122.406165"]
         
         sessionManager.request("https://api.yelp.com/v2/search/", parameters: parameters).responseArray(queue: DispatchQueue.main, keyPath: "businesses", options: JSONSerialization.ReadingOptions.allowFragments) { (response: DataResponse<[Business]>) in
             
