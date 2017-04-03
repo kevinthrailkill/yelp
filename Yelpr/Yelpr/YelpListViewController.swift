@@ -10,6 +10,12 @@ import UIKit
 
 class YelpListViewController: UIViewController {
 
+    
+    @IBOutlet weak var businessListTableView: UITableView!
+    
+    var businessList : [Business] = []
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -20,6 +26,9 @@ class YelpListViewController: UIViewController {
             response in
             if let businesses = response {
                 print(businesses)
+                self.businessList = businesses
+                self.businessListTableView.reloadData()
+                
             }else{
                 //error
                 print("error")
@@ -35,6 +44,22 @@ class YelpListViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+}
 
+extension YelpListViewController : UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return businessList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BusinessCell", for: indexPath) as! BusinessCell
+        
+        cell.business = businessList[indexPath.row]
+        
+        return cell
+        
+    }
+    
 }
 
