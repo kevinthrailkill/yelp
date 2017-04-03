@@ -22,15 +22,10 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var ratingImageView: UIImageView!
-    
     @IBOutlet weak var addressTextView: UITextView!
-    
     @IBOutlet weak var phoneNumberTextView: UITextView!
-    
     @IBOutlet weak var phoneNumberHeightConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var addressHeightContraint: NSLayoutConstraint!
-    
     @IBOutlet weak var businessMapView: MKMapView!
     
     override func viewDidLoad() {
@@ -41,8 +36,6 @@ class DetailViewController: UIViewController {
         thumbNailImageView.layer.cornerRadius = 3
         thumbNailImageView.clipsToBounds = true
         
-        print(business!)
-
         // Do any additional setup after loading the view.
     }
     

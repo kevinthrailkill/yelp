@@ -22,6 +22,7 @@ class YelpNetworkService {
     
     let sessionManager = SessionManager.default
     
+    
     init() {
         let oauthswift = OAuth1Swift(
             consumerKey: yelpConsumerKey,
@@ -37,21 +38,21 @@ class YelpNetworkService {
         
     }
 
-    func getBusinesses(text: String, location: CLLocation,  filters: FilterPreferences, completion: @escaping ([Business]?) -> ()) {
+    func getBusinesses(text: String, location: CLLocation, offset: Int, filters: FilterPreferences, completion: @escaping ([Business]?) -> ()) {
         
         //location set to sf - need to change to use users location
         
+        let limit = 20
+        
         let locationString = "\(location.coordinate.latitude),\(location.coordinate.longitude)"
         
-        var parameters: [String : AnyObject] = ["term": text as AnyObject, "ll": locationString as AnyObject, "sort": filters.sortValue.rawValue as AnyObject , "limit": 20 as AnyObject]
+        var parameters: [String : AnyObject] = ["term": text as AnyObject, "ll": locationString as AnyObject, "sort": filters.sortValue.rawValue as AnyObject , "limit": limit as AnyObject, "offset" : limit * offset as AnyObject]
         
         if filters.distanceAway.rawValue != 0 {
             parameters["radius_filter"] = filters.distanceInMeters as AnyObject
         }
         
-        if filters.hasDeal {
-            parameters["deals_filter"] = true as AnyObject
-        }
+        parameters["deals_filter"] = filters.hasDeal as AnyObject
         
         
         //need to add category
@@ -71,11 +72,4 @@ class YelpNetworkService {
         }
     }
     
-    
-    
-    
-
-    
-
-
 }

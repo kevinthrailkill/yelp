@@ -16,7 +16,6 @@ protocol YelpFilterDelegate : class {
 
 class YelpListViewController: UIViewController {
 
-    
     @IBOutlet weak var businessListTableView: UITableView!
     
     var businessList : [Business] = []
@@ -25,6 +24,7 @@ class YelpListViewController: UIViewController {
     let yelpService = YelpNetworkService.init()
     var filterPreferences = FilterPreferences()
     var locationManager: CLLocationManager!
+    var offset = 0
     
     
     
@@ -67,15 +67,12 @@ class YelpListViewController: UIViewController {
         searchYelpFor(searchText: "", location: initialLocation)
 
 
-
-        // Do any additional setup after loading the view, typically from a nib.
     }
     
     func searchYelpFor(searchText: String, location: CLLocation) {
-        yelpService.getBusinesses(text: searchText, location: location, filters: filterPreferences) {
+        yelpService.getBusinesses(text: searchText, location: location, offset: offset, filters:filterPreferences) {
             response in
             if let businesses = response {
-                //    print(businesses)
                 self.businessList = businesses
                 self.businessListTableView.reloadData()
                 
@@ -139,23 +136,18 @@ extension YelpListViewController : UITableViewDelegate, UITableViewDataSource {
 }
 
 extension YelpListViewController: UISearchResultsUpdating {
-    
     func updateSearchResults(for searchController: UISearchController) {
         if(searchController.searchBar.text!.characters.count > 0){
             searchYelpFor(searchText: searchController.searchBar.text!, location: locationManager.location!)
         }else{
-            businessList = []
-            businessListTableView.reloadData()
+            searchYelpFor(searchText: "", location: locationManager.location!)
         }
     }
-    
 }
 
 extension YelpListViewController : YelpFilterDelegate {
     func searchWith(filters: FilterPreferences) {
-        print(filters)
         filterPreferences = filters
-        
         searchYelpFor(searchText: searchController.searchBar.text!, location: locationManager.location!)
         
     }
