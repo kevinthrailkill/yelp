@@ -18,6 +18,7 @@
 		19E263D61E91FDAA001C0085 /* FilterPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E263D51E91FDAA001C0085 /* FilterPageViewController.swift */; };
 		19E263D81E9201E4001C0085 /* FilterPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E263D71E9201E4001C0085 /* FilterPreferences.swift */; };
 		19E263DA1E92C274001C0085 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E263D91E92C274001C0085 /* DetailViewController.swift */; };
+		19E263DE1E92FDAC001C0085 /* InfiniteScrollActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E263DD1E92FDAC001C0085 /* InfiniteScrollActivityView.swift */; };
 		82E3D5F358BD1F7AEF72D599 /* Pods_Yelpr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1773DE0CE551ADCFD46BC1D /* Pods_Yelpr.framework */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +36,7 @@
 		19E263D51E91FDAA001C0085 /* FilterPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterPageViewController.swift; sourceTree = "<group>"; };
 		19E263D71E9201E4001C0085 /* FilterPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterPreferences.swift; sourceTree = "<group>"; };
 		19E263D91E92C274001C0085 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		19E263DD1E92FDAC001C0085 /* InfiniteScrollActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfiniteScrollActivityView.swift; sourceTree = "<group>"; };
 		55E5191E146D961F6F44452B /* Pods-Yelpr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yelpr.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Yelpr/Pods-Yelpr.debug.xcconfig"; sourceTree = "<group>"; };
 		8082F300A0934D1936ECAF86 /* Pods-Yelpr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yelpr.release.xcconfig"; path = "Pods/Target Support Files/Pods-Yelpr/Pods-Yelpr.release.xcconfig"; sourceTree = "<group>"; };
 		B1773DE0CE551ADCFD46BC1D /* Pods_Yelpr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Yelpr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -117,6 +119,7 @@
 			children = (
 				19E263D51E91FDAA001C0085 /* FilterPageViewController.swift */,
 				19E263B21E919D8B001C0085 /* YelpListViewController.swift */,
+				19E263DD1E92FDAC001C0085 /* InfiniteScrollActivityView.swift */,
 				19E263D91E92C274001C0085 /* DetailViewController.swift */,
 			);
 			name = "View Controllers";
@@ -262,6 +265,7 @@
 				19E263D81E9201E4001C0085 /* FilterPreferences.swift in Sources */,
 				19E263B11E919D8B001C0085 /* AppDelegate.swift in Sources */,
 				19E263DA1E92C274001C0085 /* DetailViewController.swift in Sources */,
+				19E263DE1E92FDAC001C0085 /* InfiniteScrollActivityView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
