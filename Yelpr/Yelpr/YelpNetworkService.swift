@@ -36,17 +36,31 @@ class YelpNetworkService {
         
     }
 
-    func getBusinesses(text: String, completion: @escaping ([Business]?) -> ()) {
-        
+    func getBusinesses(text: String, filters: FilterPreferences, completion: @escaping ([Business]?) -> ()) {
         
         //location set to sf - need to change to use users location
-        let parameters: [String : String] = ["term": text, "ll": "37.785771,-122.406165"]
+        var parameters: [String : String] = ["term": text, "ll": "37.785771,-122.406165", "sort": "\(filters.sortValue.rawValue)" ]
+        
+        if filters.distanceAway.rawValue != 0 {
+            parameters["radius_filter"] = "\(filters.distanceInMeters)"
+        }
+        
+        if filters.hasDeal {
+            parameters["deals_filter"] = "true"
+        }
+        
+        
+        //need to add category
+     //   if true {
+     //       parameters["category_filter"] = "restaurants"
+      //  }
+        
         
         sessionManager.request("https://api.yelp.com/v2/search/", parameters: parameters).responseArray(queue: DispatchQueue.main, keyPath: "businesses", options: JSONSerialization.ReadingOptions.allowFragments) { (response: DataResponse<[Business]>) in
             
-            if(response.result.isFailure){
+            if response.result.isFailure {
                 completion(nil)
-            }else{
+            }else {
                 let businesses = response.result.value
                 completion(businesses)
             }
