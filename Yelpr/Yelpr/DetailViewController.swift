@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class DetailViewController: UIViewController {
 
@@ -30,6 +31,7 @@ class DetailViewController: UIViewController {
     
     @IBOutlet weak var addressHeightContraint: NSLayoutConstraint!
     
+    @IBOutlet weak var businessMapView: MKMapView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +44,25 @@ class DetailViewController: UIViewController {
         print(business!)
 
         // Do any additional setup after loading the view.
+    }
+    
+    func centerMapOnLocation(location: CLLocation) {
+        
+        let annotation = MKPointAnnotation()
+        let centerCoordinate = location.coordinate
+        annotation.coordinate = centerCoordinate
+        businessMapView.addAnnotation(annotation)
+        
+        
+        let regionRadius: CLLocationDistance = 1000
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
+                                                                  regionRadius * 2.0, regionRadius * 2.0)
+        businessMapView.setRegion(coordinateRegion, animated: true)
+        
+        
+        
+        
+        
     }
     
     
@@ -81,6 +102,15 @@ class DetailViewController: UIViewController {
             phoneNumberTextView.isHidden = true
             phoneNumberHeightConstraint.constant = 4.0
         }
+        
+        
+        if let coordinateDictionary = business!.bizLocation?.coordinate {
+            let initialLocation = CLLocation(latitude: coordinateDictionary["latitude"]!, longitude: coordinateDictionary["longitude"]!)
+            
+            centerMapOnLocation(location: initialLocation)
+        } else{
+            businessMapView.setCenter(businessMapView.userLocation.coordinate, animated: true)
+        }
 
     }
     
@@ -90,11 +120,16 @@ class DetailViewController: UIViewController {
             
             if let fullAddress = bizloc.fullAddress {
                 if fullAddress.count > 0 {
-                    for (index, addPart) in fullAddress.enumerated() {
-                        if(index != 1) {
+                    for addPart in fullAddress {
+                        
+                        if let neighborhoods = location?.neighborhoods, !neighborhoods.contains(addPart) {
+                            address += addPart
+                            address += "\n"
+                        }else{
                             address += addPart
                             address += "\n"
                         }
+                        
                     }
                     return address.substring(to: address.index(before: address.endIndex))
                 }
@@ -148,16 +183,9 @@ class DetailViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
+}
+
+extension DetailViewController : MKMapViewDelegate {
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

@@ -265,8 +265,11 @@
                                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="KDP-Rg-nGe" secondAttribute="bottom" constant="12" id="xam-VR-5gJ"/>
                                 </constraints>
                             </view>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="749" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="1g9-EY-Tp7">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="749" mapType="standard" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1g9-EY-Tp7">
                                 <rect key="frame" x="0.0" y="190" width="375" height="477"/>
+                                <connections>
+                                    <outlet property="delegate" destination="JUu-Vm-NKz" id="YzS-om-3A2"/>
+                                </connections>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -283,6 +286,7 @@
                     <connections>
                         <outlet property="addressHeightContraint" destination="5Jl-bG-4an" id="kHU-aW-OoK"/>
                         <outlet property="addressTextView" destination="JCs-8x-IHZ" id="E6y-dA-y4A"/>
+                        <outlet property="businessMapView" destination="1g9-EY-Tp7" id="SDU-Vs-Xrc"/>
                         <outlet property="categoryLabel" destination="7b1-cq-usj" id="5gX-Ph-8Oi"/>
                         <outlet property="distanceLabel" destination="YCi-d1-RL4" id="Gad-6S-Iuy"/>
                         <outlet property="nameLabel" destination="pSL-nO-3rr" id="CJ9-M6-OQ9"/>
