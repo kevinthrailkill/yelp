@@ -16,7 +16,6 @@ protocol YelpFilterDelegate : class {
 
 class YelpListViewController: UIViewController {
 
-    
     @IBOutlet weak var businessListTableView: UITableView!
     
     var businessList : [Business] = []
@@ -25,6 +24,9 @@ class YelpListViewController: UIViewController {
     let yelpService = YelpNetworkService.init()
     var filterPreferences = FilterPreferences()
     var locationManager: CLLocationManager!
+    var offset = 0
+    var isMoreDataLoading = false
+    var loadingMoreView:InfiniteScrollActivityView?
     
     
     
@@ -62,26 +64,33 @@ class YelpListViewController: UIViewController {
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         
-        let initialLocation = locationManager.location!
         
-        searchYelpFor(searchText: "", location: initialLocation)
+        searchYelpFor(searchText: "")
+        
+        
+        // Set up Infinite Scroll loading indicator
+        let frame = CGRect(x: 0, y: businessListTableView.contentSize.height, width: businessListTableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
+        loadingMoreView = InfiniteScrollActivityView(frame: frame)
+        loadingMoreView!.isHidden = true
+        businessListTableView.addSubview(loadingMoreView!)
+        
+        var insets = businessListTableView.contentInset
+        insets.bottom += InfiniteScrollActivityView.defaultHeight
+        businessListTableView.contentInset = insets
 
 
-
-        // Do any additional setup after loading the view, typically from a nib.
     }
     
-    func searchYelpFor(searchText: String, location: CLLocation) {
-        yelpService.getBusinesses(text: searchText, location: location, filters: filterPreferences) {
+    func searchYelpFor(searchText: String) {
+        yelpService.getBusinesses(text: searchText, location: locationManager.location!, offset: offset, filters:filterPreferences) {
             response in
             if let businesses = response {
-                //    print(businesses)
                 self.businessList = businesses
                 self.businessListTableView.reloadData()
                 
-                if businesses.count > 0 {
-                    self.businessListTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableViewScrollPosition.top, animated: true)
-                }
+              //  if businesses.count > 0 {
+               //     self.businessListTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableViewScrollPosition.top, animated: true)
+              //  }
                 
             }else{
                 //error
@@ -90,11 +99,6 @@ class YelpListViewController: UIViewController {
             
         }
     }
-    
-    
-    
-    
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -129,39 +133,87 @@ extension YelpListViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BusinessCell", for: indexPath) as! BusinessCell
-        
         cell.business = businessList[indexPath.row]
-        
         return cell
-        
     }
-    
 }
 
 extension YelpListViewController: UISearchResultsUpdating {
-    
     func updateSearchResults(for searchController: UISearchController) {
+        offset = 0
         if(searchController.searchBar.text!.characters.count > 0){
-            searchYelpFor(searchText: searchController.searchBar.text!, location: locationManager.location!)
+            searchYelpFor(searchText: searchController.searchBar.text!)
         }else{
-            businessList = []
-            businessListTableView.reloadData()
+            searchYelpFor(searchText: "")
         }
     }
-    
 }
 
 extension YelpListViewController : YelpFilterDelegate {
     func searchWith(filters: FilterPreferences) {
-        print(filters)
+        offset = 0
         filterPreferences = filters
-        
-        searchYelpFor(searchText: searchController.searchBar.text!, location: locationManager.location!)
-        
+        searchYelpFor(searchText: searchController.searchBar.text!)
     }
 }
 
 extension YelpListViewController : CLLocationManagerDelegate {
     
 }
+
+extension YelpListViewController : UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (!isMoreDataLoading) {
+            // Calculate the position of one screen length before the bottom of the results
+            let scrollViewContentHeight = businessListTableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - businessListTableView.bounds.size.height
+            
+            // When the user has scrolled past the threshold, start requesting
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && businessListTableView.isDragging) {
+                isMoreDataLoading = true
+                offset += 1
+                // Update position of loadingMoreView, and start loading indicator
+                let frame = CGRect(x: 0, y: businessListTableView.contentSize.height, width: businessListTableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
+                loadingMoreView?.frame = frame
+                loadingMoreView!.startAnimating()
+                
+                // Code to load more results
+                loadMoreData()		
+            }
+        }
+    }
+    
+    func loadMoreData() {
+        
+        yelpService.getBusinesses(text: searchController.searchBar.text!, location: locationManager.location!, offset: offset, filters:filterPreferences) {
+            response in
+            if let businesses = response {
+                
+                // Update flag
+                self.isMoreDataLoading = false
+                
+                // Stop the loading indicator
+                self.loadingMoreView!.stopAnimating()
+                
+                self.businessList.append(contentsOf: businesses)
+                self.businessListTableView.reloadData()
+                
+                
+            }else{
+                //error
+                print("error")
+            }
+            
+        }
+
+        
+    }
+    
+    
+    
+}
+
+
+
 
