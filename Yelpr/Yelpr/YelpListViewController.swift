@@ -32,7 +32,6 @@ class YelpListViewController: UIViewController {
         businessListTableView.rowHeight = UITableViewAutomaticDimension
         businessListTableView.estimatedRowHeight = 120
         
-        
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
@@ -90,7 +89,12 @@ class YelpListViewController: UIViewController {
             filterViewController.filterPreferences = filterPreferences
             filterViewController.filterDelegate = self
             
+        }else if segue.identifier == "DetailPageSegue" {
+            let detailController = segue.destination
+                as! DetailViewController
+            let selectedIndex = businessListTableView.indexPath(for: sender as! UITableViewCell)
             
+            detailController.business = businessList[(selectedIndex?.row)!]
         }
     }
 

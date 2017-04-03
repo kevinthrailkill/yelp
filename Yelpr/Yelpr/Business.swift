@@ -18,6 +18,7 @@ struct Business : Unboxable {
     let distanceInMeters: Double?
     let ratingImageURLString: String?
     let reviewCount: Int?
+    let phoneNumber: String?
     
     init(unboxer: Unboxer) throws {
         self.name = try unboxer.unbox(key: "name")
@@ -27,6 +28,7 @@ struct Business : Unboxable {
         self.distanceInMeters = unboxer.unbox(key: "distance")
         self.ratingImageURLString = unboxer.unbox(key: "rating_img_url_large")
         self.reviewCount = unboxer.unbox(key: "review_count")
+        self.phoneNumber = unboxer.unbox(key: "display_phone")
         
     }
 
@@ -35,9 +37,14 @@ struct Business : Unboxable {
 struct BusinessLocation: Unboxable {
     let address: [String]?
     let neighborhoods: [String]?
+    let fullAddress: [String]?
+    let coordinate : [String: Double]?
     
     init(unboxer: Unboxer) throws {
         self.address =  unboxer.unbox(key: "address")
+        self.fullAddress =  unboxer.unbox(key: "display_address")
         self.neighborhoods = unboxer.unbox(key: "neighborhoods")
+        self.coordinate = unboxer.unbox(key: "coordinate")
+
     }
 }
