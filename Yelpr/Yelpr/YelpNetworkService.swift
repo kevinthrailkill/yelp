@@ -11,6 +11,7 @@ import Alamofire
 import UnboxedAlamofire
 import OAuthSwift
 import OAuthSwiftAlamofire
+import MapKit
 
 fileprivate let yelpConsumerKey = "Ud2_KGByd9GxXjjQs82_Uw"
 fileprivate let yelpConsumerSecret = "290wZFJ-pKbF2SrTlkdNKUnFWlo"
@@ -36,10 +37,14 @@ class YelpNetworkService {
         
     }
 
-    func getBusinesses(text: String, filters: FilterPreferences, completion: @escaping ([Business]?) -> ()) {
+    func getBusinesses(text: String, location: CLLocation,  filters: FilterPreferences, completion: @escaping ([Business]?) -> ()) {
         
         //location set to sf - need to change to use users location
-        var parameters: [String : String] = ["term": text, "ll": "37.785771,-122.406165", "sort": "\(filters.sortValue.rawValue)" ]
+        
+        
+        let locationString = "\(location.coordinate.latitude),\(location.coordinate.longitude)"
+        
+        var parameters: [String : String] = ["term": text, "ll": locationString, "sort": "\(filters.sortValue.rawValue)" ]
         
         if filters.distanceAway.rawValue != 0 {
             parameters["radius_filter"] = "\(filters.distanceInMeters)"
@@ -66,6 +71,10 @@ class YelpNetworkService {
             }
         }
     }
+    
+    
+    
+    
 
     
 

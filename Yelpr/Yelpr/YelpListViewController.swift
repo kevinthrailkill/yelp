@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 
 protocol YelpFilterDelegate : class {
@@ -23,6 +24,7 @@ class YelpListViewController: UIViewController {
     let searchController = UISearchController(searchResultsController: nil)
     let yelpService = YelpNetworkService.init()
     var filterPreferences = FilterPreferences()
+    var locationManager: CLLocationManager!
     
     
     
@@ -31,7 +33,6 @@ class YelpListViewController: UIViewController {
         
         businessListTableView.rowHeight = UITableViewAutomaticDimension
         businessListTableView.estimatedRowHeight = 120
-        
         
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
@@ -49,19 +50,38 @@ class YelpListViewController: UIViewController {
         definesPresentationContext = true
         navigationItem.titleView = searchController.searchBar
         
-        searchYelpFor(searchText: "")
+        
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        
+        if CLLocationManager.authorizationStatus() == .notDetermined {
+            self.locationManager.requestWhenInUseAuthorization()
+        }
+
+        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        
+        let initialLocation = locationManager.location!
+        
+        searchYelpFor(searchText: "", location: initialLocation)
+
+
 
         // Do any additional setup after loading the view, typically from a nib.
     }
     
-    func searchYelpFor(searchText: String) {
-        yelpService.getBusinesses(text: searchText, filters: filterPreferences) {
+    func searchYelpFor(searchText: String, location: CLLocation) {
+        yelpService.getBusinesses(text: searchText, location: location, filters: filterPreferences) {
             response in
             if let businesses = response {
                 //    print(businesses)
                 self.businessList = businesses
                 self.businessListTableView.reloadData()
-                self.businessListTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableViewScrollPosition.top, animated: true)
+                
+                if businesses.count > 0 {
+                    self.businessListTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableViewScrollPosition.top, animated: true)
+                }
                 
             }else{
                 //error
@@ -90,7 +110,12 @@ class YelpListViewController: UIViewController {
             filterViewController.filterPreferences = filterPreferences
             filterViewController.filterDelegate = self
             
+        }else if segue.identifier == "DetailPageSegue" {
+            let detailController = segue.destination
+                as! DetailViewController
+            let selectedIndex = businessListTableView.indexPath(for: sender as! UITableViewCell)
             
+            detailController.business = businessList[(selectedIndex?.row)!]
         }
     }
 
@@ -117,7 +142,7 @@ extension YelpListViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
         if(searchController.searchBar.text!.characters.count > 0){
-            searchYelpFor(searchText: searchController.searchBar.text!)
+            searchYelpFor(searchText: searchController.searchBar.text!, location: locationManager.location!)
         }else{
             businessList = []
             businessListTableView.reloadData()
@@ -131,10 +156,12 @@ extension YelpListViewController : YelpFilterDelegate {
         print(filters)
         filterPreferences = filters
         
-        searchYelpFor(searchText: searchController.searchBar.text!)
+        searchYelpFor(searchText: searchController.searchBar.text!, location: locationManager.location!)
         
     }
+}
 
+extension YelpListViewController : CLLocationManagerDelegate {
     
 }
 
