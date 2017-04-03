@@ -19,6 +19,8 @@ class YelpListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        businessListTableView.rowHeight = UITableViewAutomaticDimension
+        businessListTableView.estimatedRowHeight = 120
         
         let yelp = YelpNetworkService.init()
         

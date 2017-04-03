@@ -30,6 +30,17 @@ class BusinessCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        businessImageView.layer.cornerRadius = 3
+        businessImageView.clipsToBounds = true
+        
+        nameLabel.preferredMaxLayoutWidth = nameLabel.frame.size.width
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        nameLabel.preferredMaxLayoutWidth = nameLabel.frame.size.width
+
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -41,7 +52,7 @@ class BusinessCell: UITableViewCell {
     func configureCell(){
         
         nameLabel.text = business.name
-        reviewCountLabel.text = "\(business.reviewCount)"
+        reviewCountLabel.text = "\(business.reviewCount) Reviews"
         addressLabel.text = getAddressString(location: business.bizLocation)
         categoriesLabel.text = getCategoryString(cats: business.categories)
         distanceLabel.text = getDistanceString(dis: business.distanceInMeters)
