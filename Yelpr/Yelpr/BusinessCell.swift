@@ -52,7 +52,7 @@ class BusinessCell: UITableViewCell {
     func configureCell(){
         
         nameLabel.text = business.name
-        reviewCountLabel.text = "\(business.reviewCount) Reviews"
+        reviewCountLabel.text = "\(business.reviewCount!) Reviews"
         addressLabel.text = getAddressString(location: business.bizLocation)
         categoriesLabel.text = getCategoryString(cats: business.categories)
         distanceLabel.text = getDistanceString(dis: business.distanceInMeters)
