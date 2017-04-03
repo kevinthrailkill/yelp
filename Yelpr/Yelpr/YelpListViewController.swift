@@ -35,6 +35,7 @@ class YelpListViewController: UIViewController {
         
         let textFieldInsideSearchBar = searchController.searchBar.value(forKey: "searchField") as? UITextField
         
+        textFieldInsideSearchBar?.placeholder = "Restaurants"
         textFieldInsideSearchBar?.font = UIFont(name: "Gill Sans", size: 13.0)
         textFieldInsideSearchBar?.textColor = UIColor(red: 0, green: 0.263, blue: 0.337, alpha: 1.0)
         

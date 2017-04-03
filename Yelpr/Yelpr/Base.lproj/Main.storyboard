@@ -133,7 +133,10 @@
                             <constraint firstAttribute="trailing" secondItem="AOU-QJ-FPc" secondAttribute="trailing" id="wfB-tE-v6H"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="xFY-90-Icy"/>
+                    <navigationItem key="navigationItem" id="xFY-90-Icy">
+                        <barButtonItem key="leftBarButtonItem" title="Filter" id="x7L-1f-cBt"/>
+                        <barButtonItem key="rightBarButtonItem" title="Map" id="I2t-Oo-NY1"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="businessListTableView" destination="AOU-QJ-FPc" id="yUI-OM-Eaw"/>
                     </connections>
@@ -147,9 +150,11 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jY7-ch-1P0" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="v4x-wS-hoQ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="v4x-wS-hoQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.0" green="0.26226249820000003" blue="0.33743757660000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.0" green="0.74117647060000003" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
