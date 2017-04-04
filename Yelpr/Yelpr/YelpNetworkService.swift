@@ -55,10 +55,11 @@ class YelpNetworkService {
         parameters["deals_filter"] = filters.hasDeal as AnyObject
         
         
-        //need to add category
-     //   if true {
-     //       parameters["category_filter"] = "restaurants"
-      //  }
+        
+        if filters.categories.count > 0 {
+            parameters["category_filter"] = (filters.categories).joined(separator: ",") as AnyObject
+        }
+
         
         
         sessionManager.request("https://api.yelp.com/v2/search/", parameters: parameters).responseArray(queue: DispatchQueue.main, keyPath: "businesses", options: JSONSerialization.ReadingOptions.allowFragments) { (response: DataResponse<[Business]>) in

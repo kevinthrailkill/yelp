@@ -119,7 +119,9 @@ class FilterPageViewController: UITableViewController {
         } else if section == 3 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! CategoryCell
             
+            let category = categories[indexPath.row]
             
+            cell.categorySwitch.isOn = filterPreferences!.categories.contains(category["code"]!)            
             cell.categoryLabel.text = categories[indexPath.row]["name"]
             cell.delegate = self
             
@@ -169,8 +171,21 @@ extension FilterPageViewController : DealsCellDelegate, CategoryCellDelegate {
     }
     
     func category(cell: CategoryCell, didChangeValue value: Bool) {
-        print(cell.categoryLabel.text)
-        print(value)
+        
+        let indexpath = tableView.indexPath(for: cell)!
+        
+        let categoryValue = categories[indexpath.row]["code"]!
+        
+        
+        if filterPreferences!.categories.contains(categoryValue){
+            let row = filterPreferences!.categories.index(of: categoryValue)!
+            filterPreferences!.categories.remove(at: row)
+        }else{
+             filterPreferences!.categories.append(categoryValue)
+        }
+        
+        print(filterPreferences!.categories)
+        
     }
     
     

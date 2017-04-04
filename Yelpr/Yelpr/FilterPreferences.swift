@@ -14,6 +14,7 @@ struct FilterPreferences {
     var hasDeal = true
     var distanceAway : YelpDistanceAway = .auto
     var sortValue : YelpSortDescriptor = .bestMatched
+    var categories : [String] = []
     
     var distanceInMeters : Double {
         get {
