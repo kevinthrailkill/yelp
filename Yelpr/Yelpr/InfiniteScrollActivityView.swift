@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 
+/// View that is shown when more data is loaded
 class InfiniteScrollActivityView: UIView {
     var activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
     static let defaultHeight:CGFloat = 60.0

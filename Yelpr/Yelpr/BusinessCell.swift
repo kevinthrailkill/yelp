@@ -9,6 +9,7 @@
 import UIKit
 import AFNetworking
 
+/// Business cell for the business list view
 class BusinessCell: UITableViewCell {
 
     
@@ -30,30 +31,24 @@ class BusinessCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        businessImageView.layer.cornerRadius = 3
-        businessImageView.clipsToBounds = true
-        
-        nameLabel.preferredMaxLayoutWidth = nameLabel.frame.size.width
     }
     
     override func layoutSubviews() {
-        super.layoutSubviews()
-        nameLabel.preferredMaxLayoutWidth = nameLabel.frame.size.width
-
-        
+        super.layoutSubviews()        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
+    
+    
+    /// When the Business is set, the cell is configured below
     func configureCell(){
         
         nameLabel.text = business.name
         reviewCountLabel.text = "\(business.reviewCount!) Reviews"
-        addressLabel.text = getAddressString(location: business.bizLocation)
+        addressLabel.text = getShortAddressString(location: business.bizLocation)
         categoriesLabel.text = getCategoryString(cats: business.categories)
         distanceLabel.text = getDistanceString(dis: business.distanceInMeters)
         
@@ -65,49 +60,8 @@ class BusinessCell: UITableViewCell {
             ratingImageView.setImageWith(URL(string: "\(ratings)")!)
         }
         
+        businessImageView.layer.cornerRadius = 3
+        businessImageView.clipsToBounds = true
     }
     
-    private func getAddressString(location: BusinessLocation?) -> String {
-        if let bizloc = location {
-            var address = ""
-            
-            if let addressArray = bizloc.address {
-                if addressArray.count > 0 {
-                    address = addressArray[0]
-                }
-            }
-            
-            if let neighborhoodArray = bizloc.neighborhoods {
-                if neighborhoodArray.count > 0 {
-                    if !address.isEmpty {
-                        address += ", "
-                    }
-                    address += neighborhoodArray[0]
-                }
-            }
-            return address
-            
-        }
-        return "No Address, Most likely error"
-    }
-    
-    private func getCategoryString(cats: [[String]]?) -> String {
-        if let categories = cats {
-            var categoryNames = [String]()
-            for category in categories {
-                let categoryName = category[0]
-                categoryNames.append(categoryName)
-            }
-            return categoryNames.joined(separator: ", ")
-        }
-        return ""
-    }
-
-    private func getDistanceString(dis: Double?) -> String {
-        if let distance = dis {
-            let milesPerMeter = 0.000621371
-            return String(format: "%.2f mi", milesPerMeter * distance)
-        }
-        return ""
-    }
 }

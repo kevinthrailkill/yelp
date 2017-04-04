@@ -7,15 +7,35 @@
 //
 
 import UIKit
+import CoreLocation
+
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
 
     var window: UIWindow?
+    var locationManager: CLLocationManager!
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        
+        //Set up the location manager to be used in any view controller
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        
+        if CLLocationManager.authorizationStatus() == .notDetermined {
+            self.locationManager.requestWhenInUseAuthorization()
+        }
+        
+        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        
+        let navController = self.window?.rootViewController as! UINavigationController
+        let listViewController = navController.viewControllers[0] as! YelpListViewController
+        listViewController.locationManager = locationManager
+        
         return true
     }
     

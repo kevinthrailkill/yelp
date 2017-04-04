@@ -9,6 +9,7 @@
 import Foundation
 
 
+/// Struct to store the filter preferences
 struct FilterPreferences {
     
     var hasDeal = true
@@ -16,6 +17,8 @@ struct FilterPreferences {
     var sortValue : YelpSortDescriptor = .bestMatched
     var categories : [String] = []
     
+    
+    /// Returns the distance in meters depending which enum is set
     var distanceInMeters : Double {
         get {
             switch distanceAway {
@@ -36,9 +39,13 @@ struct FilterPreferences {
     
 }
 
+
+/// Enum for which sort to choose
 enum YelpSortDescriptor : Int {
     case bestMatched = 0, distance, highestRated
     
+    
+    /// Gets the text discription of the sort
     var description: String {
         switch self {
         case .bestMatched :
@@ -53,6 +60,8 @@ enum YelpSortDescriptor : Int {
     
 }
 
+
+/// Distance enum
 enum YelpDistanceAway : Int {
     case auto = 0
     case closest
@@ -60,28 +69,27 @@ enum YelpDistanceAway : Int {
     case farther
     case farAway
     
+    
+    /// Returns the text discription of the distance
     var description: String {
         switch self {
-            case .auto :
-                return "Auto"
-            case .closest :
-                return "0.3 Miles"
-            case .mileAway :
-                return "1 Mile"
-            case .farther :
-                return "5 Miles"
-            case .farAway :
-                return "10 Miles"
+        case .auto :
+            return "Auto"
+        case .closest :
+            return "0.3 Miles"
+        case .mileAway :
+            return "1 Mile"
+        case .farther :
+            return "5 Miles"
+        case .farAway :
+            return "10 Miles"
             
         }
     }
     
 }
 
-    
-
-
-
+/// Categories for food selection
 let categories = [["name" : "Afghan", "code": "afghani"],
                   ["name" : "African", "code": "african"],
                   ["name" : "American, New", "code": "newamerican"],
