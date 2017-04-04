@@ -51,11 +51,6 @@ class DetailViewController: UIViewController {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
                                                                   regionRadius * 2.0, regionRadius * 2.0)
         businessMapView.setRegion(coordinateRegion, animated: true)
-        
-        
-        
-        
-        
     }
     
     
