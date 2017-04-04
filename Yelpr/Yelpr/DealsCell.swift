@@ -15,7 +15,6 @@ protocol DealsCellDelegate : class {
 
 class DealsCell: UITableViewCell {
 
-    
     weak var delegate: DealsCellDelegate?
     
     @IBAction func dealChanged(_ sender: Any) {

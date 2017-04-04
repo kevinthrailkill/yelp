@@ -9,13 +9,11 @@
 import UIKit
 import MapKit
 
-class DetailViewController: UIViewController {
 
-    
-    var business : Business?
-    
+/// Detail View Page
+class DetailViewController: UIViewController, MKMapViewDelegate {
+
     @IBOutlet weak var thumbNailImageView: UIImageView!
-    
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var reviewCountLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
@@ -28,53 +26,33 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var addressHeightContraint: NSLayoutConstraint!
     @IBOutlet weak var businessMapView: MKMapView!
     
+    var business : Business?
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         configureView()
-        thumbNailImageView.layer.cornerRadius = 3
-        thumbNailImageView.clipsToBounds = true
-        
-        // Do any additional setup after loading the view.
-    }
-    
-    func centerMapOnLocation(location: CLLocation) {
-        
-        let annotation = MKPointAnnotation()
-        let centerCoordinate = location.coordinate
-        annotation.coordinate = centerCoordinate
-        businessMapView.addAnnotation(annotation)
-        
-        
-        let regionRadius: CLLocationDistance = 1000
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
-                                                                  regionRadius * 2.0, regionRadius * 2.0)
-        businessMapView.setRegion(coordinateRegion, animated: true)
     }
     
     
+    
+    /// Configures the detail view
     func configureView(){
+        
         nameLabel.text = business!.name
         reviewCountLabel.text = "\(business!.reviewCount!) Reviews"
-        //addressLabel.text = getAddressString(location: business!.bizLocation)
         categoryLabel.text = getCategoryString(cats: business!.categories)
         distanceLabel.text = getDistanceString(dis: business!.distanceInMeters)
+        addressTextView.text = getFullAddressString(location: business!.bizLocation)
         
-        addressTextView.text = getAddressString(location: business!.bizLocation)
-        
+        //sets the height of the text label for the address
         let fixedWidth = addressTextView.frame.size.width
         addressTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
         let newSize = addressTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
         var newFrame = addressTextView.frame
         newFrame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
-        
         addressHeightContraint.constant = newSize.height
-        
         addressTextView.frame = newFrame;
-        
-        
-        
+
         if let image = business!.imageURLString {
             thumbNailImageView.setImageWith(URL(string: "\(image)")!)
         }
@@ -99,73 +77,28 @@ class DetailViewController: UIViewController {
         } else{
             businessMapView.setCenter(businessMapView.userLocation.coordinate, animated: true)
         }
+        
+        thumbNailImageView.layer.cornerRadius = 3
+        thumbNailImageView.clipsToBounds = true
 
     }
     
-    private func getAddressString(location: BusinessLocation?) -> String {
-        if let bizloc = location {
-            var address = ""
-            
-            if let fullAddress = bizloc.fullAddress {
-                if fullAddress.count > 0 {
-                    for addPart in fullAddress {
-                        
-                        if let neighborhoods = location?.neighborhoods, !neighborhoods.contains(addPart) {
-                            address += addPart
-                            address += "\n"
-                        }else{
-                            address += addPart
-                            address += "\n"
-                        }
-                        
-                    }
-                    return address.substring(to: address.index(before: address.endIndex))
-                }
-                
-            }else{
-                if let addressArray = bizloc.address {
-                    if addressArray.count > 0 {
-                        address = addressArray[0]
-                    }
-                }
-                
-                if let neighborhoodArray = bizloc.neighborhoods {
-                    if neighborhoodArray.count > 0 {
-                        if !address.isEmpty {
-                            address += ", "
-                        }
-                        address += neighborhoodArray[0]
-                    }
-                }
-                return address
-            }
-  
-        }
-        return "No Address, Most likely error"
+    
+    /// Sets a pin on the map view and centers where business should be
+    ///
+    /// - Parameter location: the location of the business
+    func centerMapOnLocation(location: CLLocation) {
+        
+        let annotation = MKPointAnnotation()
+        let centerCoordinate = location.coordinate
+        annotation.coordinate = centerCoordinate
+        businessMapView.addAnnotation(annotation)
+        
+        let regionRadius: CLLocationDistance = 1000
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
+                                                                  regionRadius * 2.0, regionRadius * 2.0)
+        businessMapView.setRegion(coordinateRegion, animated: true)
     }
-    
-    private func getCategoryString(cats: [[String]]?) -> String {
-        if let categories = cats {
-            var categoryNames = [String]()
-            for category in categories {
-                let categoryName = category[0]
-                categoryNames.append(categoryName)
-            }
-            return categoryNames.joined(separator: ", ")
-        }
-        return ""
-    }
-    
-    private func getDistanceString(dis: Double?) -> String {
-        if let distance = dis {
-            let milesPerMeter = 0.000621371
-            return String(format: "%.2f mi", milesPerMeter * distance)
-        }
-        return ""
-    }
-    
-    
-    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -174,6 +107,3 @@ class DetailViewController: UIViewController {
 
 }
 
-extension DetailViewController : MKMapViewDelegate {
-    
-}

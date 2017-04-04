@@ -10,14 +10,6 @@ import UIKit
 
 class FilterPageViewController: UITableViewController {
 
-    @IBAction func cancel(_ sender: UIBarButtonItem) {
-        self.dismiss(animated: true)
-    }
-    @IBAction func searchWithFilter(_ sender: UIBarButtonItem) {
-        self.dismiss(animated: true)
-        filterDelegate?.searchWith(filters: filterPreferences!)
-    }
-    
     var filterPreferences : FilterPreferences?
     weak var filterDelegate: YelpFilterDelegate?
     var selectedDistanceRow : Int = 0
@@ -26,10 +18,17 @@ class FilterPageViewController: UITableViewController {
         super.viewDidLoad()
     }
     
+    @IBAction func cancel(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true)
+    }
+    @IBAction func searchWithFilter(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true)
+        filterDelegate?.searchWith(filters: filterPreferences!)
+    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     // MARK: - Table view data source
@@ -49,7 +48,6 @@ class FilterPageViewController: UITableViewController {
         }else if section == 3 {
             return categories.count
         }
-        
         return 1
     }
     
@@ -64,7 +62,6 @@ class FilterPageViewController: UITableViewController {
         } else if section == 3 {
             return "Categories"
         }
-        
         return nil
     }
     
@@ -72,7 +69,6 @@ class FilterPageViewController: UITableViewController {
         if indexPath.section == 0 || indexPath.section == 3 {
             return nil
         }
-        
         return indexPath
     }
     
@@ -127,20 +123,14 @@ class FilterPageViewController: UITableViewController {
             
             return cell
         }
-        
-        
 
         return UITableViewCell()
         
     }
     
-    
-
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let section = indexPath.section
-        
-        
         let numberOfRows = tableView.numberOfRows(inSection: section)
         for row in 0..<numberOfRows {
             if let cell = tableView.cellForRow(at: IndexPath(row: row, section: section)) {
@@ -148,19 +138,13 @@ class FilterPageViewController: UITableViewController {
                 
             }
         }
-        
         if section == 1 {
             filterPreferences!.distanceAway = YelpDistanceAway(rawValue: indexPath.row)!
-            
         }
-        
         if section == 2 {
             filterPreferences!.sortValue = YelpSortDescriptor(rawValue: indexPath.row)!
         }
-        
     }
-
-
 }
 
 
@@ -176,7 +160,6 @@ extension FilterPageViewController : DealsCellDelegate, CategoryCellDelegate {
         
         let categoryValue = categories[indexpath.row]["code"]!
         
-        
         if filterPreferences!.categories.contains(categoryValue){
             let row = filterPreferences!.categories.index(of: categoryValue)!
             filterPreferences!.categories.remove(at: row)
@@ -185,10 +168,7 @@ extension FilterPageViewController : DealsCellDelegate, CategoryCellDelegate {
         }
         
         print(filterPreferences!.categories)
-        
     }
-    
-    
 }
 
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1916B4C71E940D22004E7C3A /* CellStringFormatterFucntions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1916B4C61E940D22004E7C3A /* CellStringFormatterFucntions.swift */; };
 		19E263B11E919D8B001C0085 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E263B01E919D8B001C0085 /* AppDelegate.swift */; };
 		19E263B31E919D8B001C0085 /* YelpListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E263B21E919D8B001C0085 /* YelpListViewController.swift */; };
 		19E263B61E919D8B001C0085 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19E263B41E919D8B001C0085 /* Main.storyboard */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1916B4C61E940D22004E7C3A /* CellStringFormatterFucntions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellStringFormatterFucntions.swift; sourceTree = "<group>"; };
 		19E263AD1E919D8B001C0085 /* Yelpr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yelpr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		19E263B01E919D8B001C0085 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		19E263B21E919D8B001C0085 /* YelpListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpListViewController.swift; sourceTree = "<group>"; };
@@ -71,6 +73,36 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		1916B4C81E940EC5004E7C3A /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				19E263B91E919D8B001C0085 /* LaunchScreen.storyboard */,
+				19E263B41E919D8B001C0085 /* Main.storyboard */,
+			);
+			name = Storyboards;
+			sourceTree = "<group>";
+		};
+		1916B4C91E940ED3004E7C3A /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				19E263C81E91C914001C0085 /* BusinessCell.swift */,
+				19E263DF1E930F7E001C0085 /* DealsCell.swift */,
+				19E263E11E930F8F001C0085 /* DistanceCell.swift */,
+				19E263E31E930F9D001C0085 /* SortCell.swift */,
+				19E263E51E930FAC001C0085 /* CategoryCell.swift */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		1916B4CA1E940EE0004E7C3A /* Helper funcs/classes */ = {
+			isa = PBXGroup;
+			children = (
+				19E263DD1E92FDAC001C0085 /* InfiniteScrollActivityView.swift */,
+				1916B4C61E940D22004E7C3A /* CellStringFormatterFucntions.swift */,
+			);
+			name = "Helper funcs/classes";
+			sourceTree = "<group>";
+		};
 		19E263A41E919D8B001C0085 = {
 			isa = PBXGroup;
 			children = (
@@ -92,9 +124,9 @@
 		19E263AF1E919D8B001C0085 /* Yelpr */ = {
 			isa = PBXGroup;
 			children = (
+				19E263B01E919D8B001C0085 /* AppDelegate.swift */,
 				19E263C21E91A4C0001C0085 /* Model/Network */,
 				19E263C71E91C8EF001C0085 /* Views */,
-				19E263B01E919D8B001C0085 /* AppDelegate.swift */,
 				19E263D21E91EADE001C0085 /* View Controllers */,
 				19E263B71E919D8B001C0085 /* Assets.xcassets */,
 				19E263BC1E919D8B001C0085 /* Info.plist */,
@@ -115,14 +147,9 @@
 		19E263C71E91C8EF001C0085 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				19E263DD1E92FDAC001C0085 /* InfiniteScrollActivityView.swift */,
-				19E263C81E91C914001C0085 /* BusinessCell.swift */,
-				19E263B91E919D8B001C0085 /* LaunchScreen.storyboard */,
-				19E263B41E919D8B001C0085 /* Main.storyboard */,
-				19E263DF1E930F7E001C0085 /* DealsCell.swift */,
-				19E263E11E930F8F001C0085 /* DistanceCell.swift */,
-				19E263E31E930F9D001C0085 /* SortCell.swift */,
-				19E263E51E930FAC001C0085 /* CategoryCell.swift */,
+				1916B4C91E940ED3004E7C3A /* Cells */,
+				1916B4C81E940EC5004E7C3A /* Storyboards */,
+				1916B4CA1E940EE0004E7C3A /* Helper funcs/classes */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -274,6 +301,7 @@
 				19E263E41E930F9D001C0085 /* SortCell.swift in Sources */,
 				19E263C91E91C914001C0085 /* BusinessCell.swift in Sources */,
 				19E263C61E91A7E1001C0085 /* YelpNetworkService.swift in Sources */,
+				1916B4C71E940D22004E7C3A /* CellStringFormatterFucntions.swift in Sources */,
 				19E263B31E919D8B001C0085 /* YelpListViewController.swift in Sources */,
 				19E263C41E91A4CF001C0085 /* Business.swift in Sources */,
 				19E263E01E930F7E001C0085 /* DealsCell.swift in Sources */,
@@ -405,6 +433,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = YUYDGGZ6SW;
 				INFOPLIST_FILE = Yelpr/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kevinthrailkill.Yelpr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -419,6 +448,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = YUYDGGZ6SW;
 				INFOPLIST_FILE = Yelpr/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kevinthrailkill.Yelpr;
 				PRODUCT_NAME = "$(TARGET_NAME)";

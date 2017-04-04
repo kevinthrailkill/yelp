@@ -9,6 +9,9 @@
 import Foundation
 import Unbox
 
+
+
+/// Struct to store the Business which conforms to the unboxable protocol
 struct Business : Unboxable {
     
     let name: String
@@ -31,9 +34,11 @@ struct Business : Unboxable {
         self.phoneNumber = unboxer.unbox(key: "display_phone")
         
     }
-
+    
 }
 
+
+/// Business Location Struct to Store the business location info
 struct BusinessLocation: Unboxable {
     let address: [String]?
     let neighborhoods: [String]?
@@ -45,6 +50,6 @@ struct BusinessLocation: Unboxable {
         self.fullAddress =  unboxer.unbox(key: "display_address")
         self.neighborhoods = unboxer.unbox(key: "neighborhoods")
         self.coordinate = unboxer.unbox(key: "coordinate")
-
+        
     }
 }
