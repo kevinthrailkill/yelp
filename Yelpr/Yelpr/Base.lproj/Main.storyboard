@@ -140,7 +140,6 @@
                                 <segue destination="5Ut-V3-UZj" kind="presentation" identifier="FilterPageSegue" id="L9b-XP-Xgq"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="map" id="I2t-Oo-NY1"/>
                     </navigationItem>
                     <connections>
                         <outlet property="businessListTableView" destination="AOU-QJ-FPc" id="yUI-OM-Eaw"/>
@@ -491,7 +490,6 @@
     </scenes>
     <resources>
         <image name="filter" width="22" height="22"/>
-        <image name="map" width="22" height="22"/>
         <image name="search" width="22" height="22"/>
     </resources>
 </document>
