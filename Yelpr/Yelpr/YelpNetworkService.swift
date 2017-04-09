@@ -54,7 +54,7 @@ class YelpNetworkService {
         
         let parameters = setParametersForRequst(text: text, location: location, offset: offset, filters: filters)
         
-        sessionManager.request("https://api.yelp.com/v2/search/", parameters: parameters).responseArray(queue: DispatchQueue.main, keyPath: "businesses", options: JSONSerialization.ReadingOptions.allowFragments) { (response: DataResponse<[Business]>) in
+        sessionManager.request("https://api.yelp.com/v2/search/", parameters: parameters, encoding: URLEncoding.queryString).responseArray(queue: DispatchQueue.main, keyPath: "businesses", options: JSONSerialization.ReadingOptions.allowFragments) { (response: DataResponse<[Business]>) in
             
             if response.result.isFailure {
                 completion(nil)
